@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bri 💘</title>
+  <style>
+    :root {
+      --bg1: #0f1020;
+      --bg2: #1a1230;
+      --card: rgba(255,255,255,0.08);
+      --text: #f6f1ff;
+      --muted: rgba(246,241,255,0.75);
+      --accent: #ff4d8d;
+      --accent2: #7c4dff;
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      --radius: 24px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(1000px 800px at 20% 10%, rgba(255,77,141,0.22), transparent 60%),
+                  radial-gradient(900px 700px at 80% 20%, rgba(124,77,255,0.22), transparent 60%),
+                  linear-gradient(160deg, var(--bg1), var(--bg2));
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      overflow: hidden;
+      padding: 24px;
+    }
+    .card {
+      width: min(680px, 100%);
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px 28px;
+      position: relative;
+      backdrop-filter: blur(12px);
+    }
+    .badge {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color: var(--muted);
+      font-size: 14px;
+      letter-spacing: 0.2px;
+    }
+    .badge .dot {
+      width: 10px; height: 10px; border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 6px rgba(255,77,141,0.12);
+    }
+    h1 {
+      margin: 18px 0 10px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.05;
+    }
+    p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    .question {
+      margin-top: 10px;
+      font-size: clamp(20px, 2.6vw, 28px);
+      font-weight: 650;
+    }
+    .btns {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+      position: relative;
+      min-height: 56px;
+    }
+    button {
+      border: none;
+      cursor: pointer;
+      padding: 14px 18px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 650;
+      transition: transform 120ms ease, filter 120ms ease, background 120ms ease;
+      user-select: none;
+    }
+    button:active { transform: scale(0.98); }
+    .yes {
+      background: linear-gradient(135deg, var(--accent), #ff7aa8);
+      color: #1b0b14;
+      box-shadow: 0 10px 25px rgba(255,77,141,0.25);
+    }
+    .yes:hover { filter: brightness(1.05); }
+    .no {
+      background: rgba(255,255,255,0.10);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.14);
+      position: relative;
+    }
+    .no:hover { background: rgba(255,255,255,0.14); }
+
+    .footer {
+      margin-top: 26px;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      color: rgba(246,241,255,0.65);
+      font-size: 13px;
+    }
+    .from {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .heart {
+      color: var(--accent);
+      filter: drop-shadow(0 4px 12px rgba(255,77,141,0.35));
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      padding: 24px;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(8px);
+      z-index: 50;
+    }
+    .modal.open { display: grid; }
+    .modal-card {
+      width: min(560px, 100%);
+      background: rgba(20,14,32,0.92);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      padding: 26px 24px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .modal-card h2 { margin: 0 0 10px; font-size: 28px; }
+    .modal-card p { margin: 0 0 16px; }
+    .tiny {
+      font-size: 12px;
+      color: rgba(246,241,255,0.6);
+      margin-top: 10px;
+    }
+
+    canvas#confetti {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 40;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="confetti"></canvas>
+
+  <main class="card" id="card">
+    <div class="badge">
+      <span class="dot"></span>
+      <span>Quick question (very important)</span>
+    </div>
+
+    <h1>Bri 💘</h1>
+    <p>
+      Okay so I might be fighting off a cold right now, but my feelings are still operating at full capacity.
+    </p>
+
+    <div class="question">Will you be my Valentine?</div>
+
+    <div class="btns" id="btns">
+      <button class="yes" id="yesBtn">Yes 🙂</button>
+      <button class="no" id="noBtn">No 😅</button>
+    </div>
+
+    <div class="footer">
+      <span class="from"><span class="heart">♥</span> from Parth</span>
+      <span id="dateTag"></span>
+    </div>
+  </main>
+
+  <div class="modal" id="modal">
+    <div class="modal-card">
+      <h2>LET’S GO 😤💘</h2>
+      <p>
+        You just made my whole week. I owe you a proper in-person ask the second I’m not congested.
+      </p>
+      <p class="tiny">Screenshot this page for proof if you want to bully me later.</p>
+      <button class="yes" id="closeBtn">Okay 🙂</button>
+    </div>
+  </div>
+
+  <script>
+    // Date tag
+    const dt = new Date();
+    document.getElementById("dateTag").textContent =
+      dt.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const btns = document.getElementById("btns");
+    const modal = document.getElementById("modal");
+    const closeBtn = document.getElementById("closeBtn");
+
+    // "No" button dodge behavior (works on desktop + mobile-ish)
+    function moveNoButton() {
+      const bounds = btns.getBoundingClientRect();
+      const btnBounds = noBtn.getBoundingClientRect();
+
+      const padding = 10;
+      const maxX = bounds.width - btnBounds.width - padding;
+      const maxY = Math.max(0, bounds.height - btnBounds.height - padding);
+
+      const x = Math.max(padding, Math.floor(Math.random() * maxX));
+      const y = Math.max(padding, Math.floor(Math.random() * (maxY + 1)));
+
+      noBtn.style.position = "absolute";
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+
+    // On hover/move: dodge
+    noBtn.addEventListener("mouseenter", moveNoButton);
+    noBtn.addEventListener("mousemove", moveNoButton);
+    noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveNoButton(); }, { passive: false });
+
+    // Yes: confetti + modal
+    yesBtn.addEventListener("click", () => {
+      burstConfetti();
+      modal.classList.add("open");
+    });
+
+    closeBtn.addEventListener("click", () => modal.classList.remove("open"));
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) modal.classList.remove("open");
+    });
+
+    // Tiny confetti engine
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    let pieces = [];
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resize);
+    resize();
+
+    function burstConfetti() {
+      const count = 180;
+      const cx = window.innerWidth / 2;
+      const cy = window.innerHeight / 3;
+
+      for (let i = 0; i < count; i++) {
+        pieces.push({
+          x: cx,
+          y: cy,
+          vx: (Math.random() - 0.5) * 12,
+          vy: (Math.random() - 0.8) * 14,
+          g: 0.22 + Math.random() * 0.10,
+          r: 4 + Math.random() * 4,
+          a: 1,
+          rot: Math.random() * Math.PI,
+          vr: (Math.random() - 0.5) * 0.2
+        });
+      }
+      animate();
+    }
+
+    let animating = false;
+    function animate() {
+      if (animating) return;
+      animating = true;
+
+      const step = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        pieces = pieces.filter(p => p.a > 0.02 && p.y < canvas.height + 40);
+        for (const p of pieces) {
+          p.vy += p.g;
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rot += p.vr;
+          p.a *= 0.985;
+
+          ctx.save();
+          ctx.globalAlpha = p.a;
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot);
+          // no explicit colors per-piece; use a gradient fill to keep it consistent
+          const grad = ctx.createLinearGradient(-10, -10, 10, 10);
+          grad.addColorStop(0, "rgba(255,77,141,1)");
+          grad.addColorStop(1, "rgba(124,77,255,1)");
+          ctx.fillStyle = grad;
+          ctx.fillRect(-p.r, -p.r, p.r * 2.2, p.r * 1.4);
+          ctx.restore();
+        }
+
+        if (pieces.length) {
+          requestAnimationFrame(step);
+        } else {
+          animating = false;
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      };
+      requestAnimationFrame(step);
+    }
+  </script>
+</body>
+</html>
