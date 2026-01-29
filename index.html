@@ -455,11 +455,11 @@
 
   <!-- Replace 'your-song.mp3' with your own audio file in the same folder as this HTML -->
   <audio id="yesMusic">
-    <source src="BAILE INoLVIDABLE.mp3" type="audio/mpeg">
+    <source src="your-song.mp3" type="audio/mpeg">
   </audio>
 
   <audio id="drumAudio">
-    <source src="Drum Roll - Sound Effect (HD).mp3" type="audio/mpeg">
+    <source src="https://cdn.pixabay.com/audio/2022/03/10/audio_4dedf4bb94.mp3" type="audio/mpeg">
   </audio>
 
   <main class="card">
@@ -487,7 +487,7 @@
 
     <!-- QUESTION -->
     <section id="questionSection" class="hidden">
-      <div class="question">Will you be my Valentine?</div>
+      <div class="question">Bri, will you be my Valentine?</div>
       <div class="btns" id="btns">
         <button class="yes" id="yesBtn">Yes :)))</button>
         <button class="no" id="noBtn">No 😅</button>
@@ -502,15 +502,27 @@
 
   <div class="modal" id="modal">
     <div class="modal-card">
-      <h2>Then it’s a date!!! ❤️</h2>
+      <h2>WOOOO LETS GO 🥰💘</h2>
       <p>
-        I’ve got something special planned for Valentine’s Day: good music, great food, and a night out in the city. You might want to dress a little nice (not that you don’t always look stunning). I can’t wait to see you ❤️
+        You just made my whole week! I've got something special planned for Valentine's Day...
+        think music, good food, and maybe a surprise or two if the night goes well.
+        Oh, and you might want to wear something nice (not that you don't always look
+        gorgeous, but you know... date night vibes). Can't wait to see you :)))
       </p>
       <button class="yes" id="closeBtn">Okay :)))</button>
     </div>
   </div>
 
   <script>
+    // ========== CONFIGURATION - ADJUST THESE VALUES ==========
+    const YES_MUSIC_VOLUME = 0.5;        // Volume for music after clicking Yes (0.0 to 1.0)
+    const DRUMROLL_VOLUME = 0.8;         // Volume for drumroll sound (0.0 to 1.0)
+    const DRUMROLL_BEATS = 10;           // Number of drum emojis to show
+    const DRUMROLL_BEAT_INTERVAL = 400;  // Milliseconds between each drum emoji (400ms = 0.4 seconds)
+                                         // Total drumroll time = DRUMROLL_BEATS × DRUMROLL_BEAT_INTERVAL
+                                         // Example: 10 beats × 400ms = 4000ms (4 seconds)
+    // =========================================================
+
     document.getElementById("dateTag").textContent =
       new Date().toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
 
@@ -557,7 +569,7 @@
       intro.classList.add("hidden");
       drumroll.classList.remove("hidden");
 
-      drumAudio.volume = 0.8;
+      drumAudio.volume = DRUMROLL_VOLUME;
       drumAudio.currentTime = 0;
       const drumPromise = drumAudio.play();
       if (drumPromise !== undefined) {
@@ -570,14 +582,14 @@
       const interval = setInterval(() => {
         drumText.textContent += " 🥁";
         beats++;
-        if (beats === 6) {
+        if (beats === DRUMROLL_BEATS) {
           clearInterval(interval);
           setTimeout(() => {
             drumroll.classList.add("hidden");
             questionSection.classList.remove("hidden");
           }, 600);
         }
-      }, 400);
+      }, DRUMROLL_BEAT_INTERVAL);
     });
 
     function moveNoButton() {
@@ -621,7 +633,7 @@
 
     yesBtn.addEventListener("click", () => {
       // Play the special song when Yes is clicked
-      yesMusic.volume = 0.7;
+      yesMusic.volume = YES_MUSIC_VOLUME;
       const musicPromise = yesMusic.play();
       if (musicPromise !== undefined) {
         musicPromise
