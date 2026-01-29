@@ -441,19 +441,16 @@
 
     /* Celebration GIF */
     .celebration-gif {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 250px;
+      width: 200px;
       height: auto;
-      z-index: 95;
+      margin: 20px auto 0;
+      display: none;
       opacity: 0;
       transition: opacity 0.5s ease;
-      pointer-events: none;
     }
 
     .celebration-gif.show {
+      display: block;
       opacity: 1;
     }
   </style>
@@ -470,9 +467,6 @@
   <div class="stage-floor"></div>
 
   <canvas id="confetti"></canvas>
-
-  <!-- Celebration GIF -->
-  <img id="celebrationGif" class="celebration-gif" src="giphy-downsized-medium.gif" alt="Celebration">
 
   <!-- Replace 'your-song.mp3' with your own audio file in the same folder as this HTML -->
   <audio id="yesMusic">
@@ -527,6 +521,10 @@
       <p>
         I’ve got something special planned for Valentine’s Day. Good music, great food, and a night out in the city. You might want to dress a little nice (not that you don’t always look GORGEOUS). I can’t wait to see you ❤️
       </p>
+      
+      <!-- Celebration GIF -->
+      <img id="celebrationGif" class="celebration-gif" src="giphy-downsized-medium.gif" alt="Celebration">
+      
       <button class="yes" id="closeBtn">Sounds good :)))</button>
     </div>
   </div>
