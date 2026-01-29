@@ -453,8 +453,9 @@
 
   <canvas id="confetti"></canvas>
 
-  <audio id="bgMusic" loop>
-    <source src="https://cdn.pixabay.com/audio/2022/05/13/audio_1808fbf07a.mp3" type="audio/mpeg">
+  <!-- Replace 'your-song.mp3' with your own audio file in the same folder as this HTML -->
+  <audio id="yesMusic">
+    <source src="your-song.mp3" type="audio/mpeg">
   </audio>
 
   <audio id="drumAudio">
@@ -518,7 +519,7 @@
     const questionSection = document.getElementById("questionSection");
     const toDrumroll = document.getElementById("toDrumroll");
     const drumAudio = document.getElementById("drumAudio");
-    const bgMusic = document.getElementById("bgMusic");
+    const yesMusic = document.getElementById("yesMusic");
     const drumText = document.getElementById("drumText");
 
     const yesBtn = document.getElementById("yesBtn");
@@ -529,25 +530,6 @@
 
     const curtainContainer = document.querySelector(".curtain-container");
     const spotlights = document.querySelectorAll(".spotlight");
-
-    // Start background music on first user interaction
-    let musicStarted = false;
-    function startMusic() {
-      if (!musicStarted) {
-        bgMusic.volume = 0.6;
-        const playPromise = bgMusic.play();
-        if (playPromise !== undefined) {
-          playPromise
-            .then(() => {
-              console.log("Background music started");
-              musicStarted = true;
-            })
-            .catch(err => {
-              console.log("Background music blocked:", err);
-            });
-        }
-      }
-    }
 
     // Open curtains and turn on spotlights
     setTimeout(() => {
@@ -572,7 +554,6 @@
     setInterval(createPetal, 1200);
 
     toDrumroll.addEventListener("click", () => {
-      startMusic();
       intro.classList.add("hidden");
       drumroll.classList.remove("hidden");
 
@@ -639,7 +620,15 @@
     });
 
     yesBtn.addEventListener("click", () => {
-      startMusic();
+      // Play the special song when Yes is clicked
+      yesMusic.volume = 0.7;
+      const musicPromise = yesMusic.play();
+      if (musicPromise !== undefined) {
+        musicPromise
+          .then(() => console.log("Music started playing"))
+          .catch(err => console.log("Music blocked:", err));
+      }
+      
       modal.classList.add("open");
       burstConfetti();
     });
