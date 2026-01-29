@@ -438,6 +438,24 @@
         opacity: 0;
       }
     }
+
+    /* Celebration GIF */
+    .celebration-gif {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 250px;
+      height: auto;
+      z-index: 95;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    .celebration-gif.show {
+      opacity: 1;
+    }
   </style>
 </head>
 
@@ -452,6 +470,9 @@
   <div class="stage-floor"></div>
 
   <canvas id="confetti"></canvas>
+
+  <!-- Celebration GIF -->
+  <img id="celebrationGif" class="celebration-gif" src="giphy-downsized-medium.gif" alt="Celebration">
 
   <!-- Replace 'your-song.mp3' with your own audio file in the same folder as this HTML -->
   <audio id="yesMusic">
@@ -536,6 +557,7 @@
     const btns = document.getElementById("btns");
     const modal = document.getElementById("modal");
     const closeBtn = document.getElementById("closeBtn");
+    const celebrationGif = document.getElementById("celebrationGif");
 
     const curtainContainer = document.querySelector(".curtain-container");
     const spotlights = document.querySelectorAll(".spotlight");
@@ -637,6 +659,9 @@
           .then(() => console.log("Music started playing"))
           .catch(err => console.log("Music blocked:", err));
       }
+      
+      // Show the celebration GIF
+      celebrationGif.classList.add("show");
       
       modal.classList.add("open");
       burstConfetti();
